@@ -88,7 +88,7 @@ def touch_sensor(_run):
             
             rtde_r.disconnect()
             rtde_r.reconnect()
-    
+            print("working")
             c_state = rtde_r.getTargetTCPPose()
             rtde_c.moveL(c_state[:2] + [net_save_hight] + c_state[3:6], *config['speed'])
             rtde_c.moveL(point + [net_save_hight] + c_state[3:6], *config['speed'])
@@ -97,7 +97,7 @@ def touch_sensor(_run):
                                          config['sensor_hight'] - config['max_sensor_depth'],
                                          config['sensor_depth_points'], 
                                          endpoint=True)
-            
+            target_depthes = np.concatenate([target_depthes, target_depthes[::-1]])
             for depth in target_depthes:
                 ## moving
                 rtde_c.moveL(point + [depth] + c_state[3:6], *config['speed'])
